@@ -4,7 +4,7 @@
 
 import Image from "next/image";
 
-export default function PropertyHeader_IMAGE({ image }) {
+export default function PropertyHeader_IMAGE({ image }: { image: string }) {
   return (
     // <!-- Property Header Image -->
     <section>
@@ -14,8 +14,10 @@ export default function PropertyHeader_IMAGE({ image }) {
             src={`/images/properties/${image}`} // taken from the public folder
             alt=""
             className="object-cover h-[400px] w-full"
-            width="1800"
-            height={400}
+            width={0}
+            height={0}
+            sizes="100vw"
+            priority={true}
           />
         </div>
       </div>

@@ -51,12 +51,12 @@ export default function Property_CARD({ property }) {
         </div>
 
         <div className="flex justify-center gap-4 text-green-900 text-sm mb-4">
-          {property.rates.weekly && (
+          {property.rates.nightly && (
             <p>
               <FaMoneyBill className="inline mr-2" /> Nightly
             </p>
           )}
-          {property.rates.nightly && (
+          {property.rates.weekly && (
             <p>
               <FaMoneyBill className="inline mr-2" /> Weekly
             </p>
