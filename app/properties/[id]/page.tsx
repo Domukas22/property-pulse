@@ -6,7 +6,7 @@
 // when fetching from a client component, you have to use useEffect
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { FETCH_sinleProperty } from "@/utils/request";
+import { FETCH_singleProperty } from "@/utils/request";
 import { loadBindings } from "next/dist/build/swc";
 import PropertyHeader_IMAGE from "@/components/PropertyHeader_IMAGE";
 import Link from "next/link";
@@ -57,7 +57,7 @@ export default function SingleProperty_PAGE() {
     async function fetchProperty() {
       if (!id) return;
       try {
-        const property = await FETCH_sinleProperty(id);
+        const property = await FETCH_singleProperty(id);
         SET_property(property);
       } catch (error) {
         console.error("Failed to fetch property", error);

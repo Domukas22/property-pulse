@@ -56,7 +56,6 @@ export default function AddProperty_FORM() {
         [name]: value,
       });
     }
-    console.log(fields);
   };
   const HANDLE_amenities = (e: any) => {
     const { name, value, checked } = e.target;

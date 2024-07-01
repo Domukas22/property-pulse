@@ -21,7 +21,7 @@ export async function FETCH_allProperties() {
   }
 }
 
-export async function FETCH_sinleProperty(id) {
+export async function FETCH_singleProperty(id) {
   try {
     // Handle the case where the API domain is not available yet
     if (!apiDomain) return null;

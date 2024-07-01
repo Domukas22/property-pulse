@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react"; // this is how you get user info o
 import profileDefault from "@/assets/images/profile.png";
 import { useState, useEffect } from "react";
 import Spinner from "@/components/Spinner";
+import { toast } from "react-toastify";
 
 export default function Profile_PAGE() {
   const { data: session } = useSession();
@@ -51,13 +52,13 @@ export default function Profile_PAGE() {
         // Remove property from the UI
         const updated_PROPERTIES = properties.filter((property) => property._id !== property_ID);
         SET_properties(updated_PROPERTIES);
-        alert("Property deleted successfully.");
+        toast.success("Property deleted successfully.");
       } else {
-        alert("Failed to delete property.");
+        toast.error("Failed to delete property.");
       }
     } catch (error) {
       console.log(error);
-      alert("Failed to delete property.");
+      toast.error("Failed to delete property.");
     }
   };
 
