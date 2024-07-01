@@ -14,15 +14,17 @@ export default function Property_CARD({ property }) {
     if (rates?.nightly) return "$" + rates.nightly.toLocaleString() + "/night";
   };
 
+  console.log(property.images[0]);
+
   return (
     <div className="rounded-xl shadow-md relative">
       <Image
         height={0}
         width={0}
         sizes="100vw"
-        src={"/images/properties/" + property.images[0]}
+        src={property.images[0]}
         alt=""
-        className="w-full h-auto rounded-t-xl"
+        className="w-full h-a uto rounded-t-xl"
       />
       <div className="p-4">
         <div className="text-left md:text-center lg:text-left mb-6">

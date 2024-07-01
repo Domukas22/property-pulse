@@ -13,6 +13,7 @@ import Link from "next/link";
 import Property_DETAILS from "@/components/Property_DETAILS";
 import { FaArrowLeft } from "react-icons/fa";
 import Spinner from "@/components/Spinner";
+import Property_IMAGES from "@/components/Property_IMAGES";
 
 interface Property {
   _id: { $oid: string };
@@ -179,6 +180,7 @@ export default function SingleProperty_PAGE() {
               </div>
             </div>
           </section>
+          <Property_IMAGES images={property.images} />
         </>
       )}
     </>

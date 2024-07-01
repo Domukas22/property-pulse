@@ -9,7 +9,8 @@ export async function FETCH_allProperties() {
     // Handle the case where the API domain is not available yet
     if (!apiDomain) return [];
     const res = await fetch(`${apiDomain}/properties`, {
-      next: { revalidate: 10 },
+      // next: { revalidate: 10 },
+      cache: "no-cache",
     });
     if (!res.ok) throw new Error("Failed to fetch properties");
 
