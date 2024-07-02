@@ -4,10 +4,11 @@
 
 "use client";
 
+import { USE_globalContext } from "@/context/GlobalContext";
 import { useEffect, useState } from "react";
 
 export default function UnreadMessage_COUNT({ session }) {
-  const [count, SET_Count] = useState(0);
+  const { unreadMessage_COUNT, SET_unreadMessageCount } = USE_globalContext();
 
   useEffect(() => {
     if (!session) return;
@@ -18,7 +19,7 @@ export default function UnreadMessage_COUNT({ session }) {
 
         if (res.ok) {
           const count = await res.json();
-          SET_Count(count);
+          SET_unreadMessageCount(count);
         }
       } catch (error) {
         console.error(error);
@@ -29,9 +30,9 @@ export default function UnreadMessage_COUNT({ session }) {
   }, [session]);
 
   return (
-    count > 0 && (
+    unreadMessage_COUNT > 0 && (
       <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
-        {count}
+        {unreadMessage_COUNT}
       </span>
     )
   );

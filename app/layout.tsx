@@ -6,6 +6,7 @@ import "@/assets/styles/globals.css";
 import Auth_PROVIDER from "@/components/Auth_PROVIDER";
 import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
+import { GlobalProvider } from "@/context/GlobalContext";
 import { ReactNode } from "react";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -23,16 +24,18 @@ export const metadata = {
 
 const Main_LAYOUT = ({ children }: MainLayout_PROPS) => {
   return (
-    <Auth_PROVIDER>
-      <html lang="en">
-        <body>
-          <Nav />
-          <main>{children}</main>
-          <Footer />
-          <ToastContainer />
-        </body>
-      </html>
-    </Auth_PROVIDER>
+    <GlobalProvider>
+      <Auth_PROVIDER>
+        <html lang="en">
+          <body>
+            <Nav />
+            <main>{children}</main>
+            <Footer />
+            <ToastContainer />
+          </body>
+        </html>
+      </Auth_PROVIDER>
+    </GlobalProvider>
   );
 };
 

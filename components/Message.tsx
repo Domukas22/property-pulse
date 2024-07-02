@@ -4,6 +4,7 @@
 
 "use client";
 
+import { USE_globalContext } from "@/context/GlobalContext";
 import { format, formatDistanceToNow } from "date-fns";
 
 import { useState } from "react";
@@ -12,6 +13,8 @@ import { toast } from "react-toastify";
 export default function Message({ message_OBJ }) {
   const [read, SET_read] = useState(message_OBJ.read);
   const [deleted, SET_deleted] = useState(false);
+
+  const { unreadMessage_COUNT, SET_unreadMessageCount } = USE_globalContext();
 
   const HANLDE_read = async () => {
     try {
@@ -22,6 +25,8 @@ export default function Message({ message_OBJ }) {
       if (res.status === 200) {
         const { read } = await res.json();
         SET_read(read);
+        SET_unreadMessageCount((prev) => (read ? prev - 1 : prev + 1));
+
         if (read) {
           toast.success("Message marked as read");
         } else {
@@ -48,6 +53,7 @@ export default function Message({ message_OBJ }) {
       if (res.status === 200) {
         toast.success("Message deleted");
         SET_deleted(true);
+        SET_unreadMessageCount((prev) => (read ? prev : prev - 1));
       }
     } catch (error) {
       console.log(error);
