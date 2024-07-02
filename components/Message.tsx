@@ -2,13 +2,68 @@
 //
 //
 
+"use client";
+
 import { format, formatDistanceToNow } from "date-fns";
 
+import { useState } from "react";
+import { toast } from "react-toastify";
+
 export default function Message({ message_OBJ }) {
-  console.log(message_OBJ);
+  const [read, SET_read] = useState(message_OBJ.read);
+  const [deleted, SET_deleted] = useState(false);
+
+  const HANLDE_read = async () => {
+    try {
+      const res = await fetch(`/api/messages/${message_OBJ._id}`, {
+        method: "PUT",
+      });
+
+      if (res.status === 200) {
+        const { read } = await res.json();
+        SET_read(read);
+        if (read) {
+          toast.success("Message marked as read");
+        } else {
+          toast.success("Message marked as unread");
+        }
+      }
+
+      if (!res.ok) {
+        const error = await res.json();
+        toast.error(error.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Couldn't update message...");
+    }
+  };
+
+  const HANLDE_delete = async () => {
+    try {
+      const res = await fetch(`/api/messages/${message_OBJ._id}`, {
+        method: "DELETE",
+      });
+
+      if (res.status === 200) {
+        toast.success("Message deleted");
+        SET_deleted(true);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Couldn't delete message...");
+    }
+  };
+
+  if (deleted) return null;
 
   return (
     <div className="relative bg-white p-4 rounded-md shadow-md border border-gray-200">
+      {!read && (
+        <div className="absolute top-2 right-2 bg-purple-600 text-white px-2 py-1 rounded-md">
+          New
+        </div>
+      )}
       <h2 className="text-xl mb-4">
         <span className="font-bold">Property Inquiry: </span>
         {message_OBJ.property.name}
@@ -34,10 +89,15 @@ export default function Message({ message_OBJ }) {
         </li>
         {GET_date(new Date(message_OBJ.createdAt))}
       </ul>
-      <button className="mt-4 mr-3 bg-blue-500 text-white py-1 px-3 rounded-md">
-        Mark As Read
+      <button
+        onClick={HANLDE_read}
+        className={`mt-4 mr-3 ${read ? "bg-gray-300" : "bg-blue-500 text-white"}  py-1 px-3 rounded-md`}
+      >
+        {read ? "Mark as unread" : "Mark as read"}
       </button>
-      <button className="mt-4 bg-red-500 text-white py-1 px-3 rounded-md">Delete</button>
+      <button onClick={HANLDE_delete} className="mt-4 bg-red-500 text-white py-1 px-3 rounded-md">
+        Delete
+      </button>
     </div>
   );
 }

@@ -13,15 +13,24 @@ export const dynamic = "force-dynamic";
 export const GET = async (req) => {
   try {
     await CONNECT_db();
+
     const session_USER = await GET_sessionUser();
 
     if (!session_USER) {
       return new Response(JSON.stringify("User ID is required"), { status: 401 });
     }
 
-    const messages = await Message.find({ recipient: session_USER.user_ID })
+    const read_MESSAGES = await Message.find({ recipient: session_USER.user_ID, read: true })
+      .sort({ createdAt: -1 }) // Sort in ascending order
       .populate("sender", "username")
       .populate("property", "name");
+
+    const unread_MESSAGES = await Message.find({ recipient: session_USER.user_ID, read: false })
+      .sort({ createdAt: -1 }) // Sort in ascending order
+      .populate("sender", "username")
+      .populate("property", "name");
+
+    const messages: any = [...unread_MESSAGES, ...read_MESSAGES];
 
     return new Response(JSON.stringify(messages), { status: 200 });
   } catch (error) {
