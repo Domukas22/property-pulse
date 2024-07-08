@@ -7,8 +7,8 @@ import Property_CARD from "./Property_CARD";
 import Link from "next/link";
 
 export default async function HomePoperty_CARDS() {
-  const properties = await FETCH_allProperties();
-  const recent_PROPERTIES = properties.sort(() => Math.random() - Math.random()).slice(0, 3);
+  const data = await FETCH_allProperties();
+  const recent_PROPERTIES = data.properties.sort(() => Math.random() - Math.random()).slice(0, 3);
 
   return (
     <>

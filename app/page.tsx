@@ -13,6 +13,7 @@ export default function Home_PAGE() {
     <div>
       <Hero />
       <InfoBoxes />
+
       <HomePoperty_CARDS />
     </div>
   );

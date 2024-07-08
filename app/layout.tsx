@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
 import { GlobalProvider } from "@/context/GlobalContext";
 import { ReactNode } from "react";
+import "photoswipe/dist/photoswipe.css";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

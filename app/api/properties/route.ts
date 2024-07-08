@@ -13,10 +13,23 @@ import cloudinary from "@/config/cloudinary";
 export const GET = async (request) => {
   try {
     await CONNECT_db();
-    const all_PROPERTIES = await Property.find({});
-    if (!all_PROPERTIES) return new Response("Properties not found", { status: 404 });
 
-    return new Response(JSON.stringify(all_PROPERTIES), { status: 200 });
+    const page = request.nextUrl.searchParams.get("page") || 1;
+    const page_SIZE = request.nextUrl.searchParams.get("pageSize") || 6;
+
+    const skip = (page - 1) * page_SIZE;
+
+    const totalProperty_COUNT = await Property.countDocuments({});
+    const properties = await Property.find({}).skip(skip).limit(page_SIZE);
+
+    const result = {
+      totalProperty_COUNT,
+      properties,
+    };
+
+    if (!result) return new Response("Properties not found", { status: 404 });
+
+    return new Response(JSON.stringify(result), { status: 200 });
   } catch (error) {
     console.log(error);
     return new Response("Soemthign went wrong...", { status: 500 });
